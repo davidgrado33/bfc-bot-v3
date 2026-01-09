@@ -11,7 +11,7 @@ on:
       monto_compra:
         description: 'Monto a comprar (USD)'
         required: true
-        default: '50'
+        default: '15'
 
 # CRÍTICO: Solo permitir UNA ejecución a la vez
 # Si se lanza una nueva, cancela la anterior automáticamente
