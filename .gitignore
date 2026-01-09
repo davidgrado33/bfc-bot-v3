@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+.vscode/
+test_relogin.py
+bot_fondo_comun.py
+bot_fondo_comuncierre sesion.py
+bot_fondo_comun_relogin_rapido.py
+bot_fondo_comun ayer.py
+bot_fondo_comun_estable.py
+captures/

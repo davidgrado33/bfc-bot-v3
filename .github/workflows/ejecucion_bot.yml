@@ -1,0 +1,47 @@
+name: Ejecución BFC Bot
+
+on:
+  schedule:
+    # Horario VET (UTC-4):
+    # 1. 07:50 AM VET (11:50 UTC) -> Cubre mañana
+    # 2. 01:50 PM VET (17:50 UTC) -> Cubre tarde hasta cierre
+    - cron: '50 11,17 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      monto_compra:
+        description: 'Monto a comprar (USD)'
+        required: true
+        default: '50'
+
+# CRÍTICO: Solo permitir UNA ejecución a la vez
+# Si se lanza una nueva, cancela la anterior automáticamente
+concurrency:
+  group: bfc-bot-single-run
+  cancel-in-progress: true
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright pandas requests
+          playwright install chromium
+
+      - name: Ejecutar Bot
+        env:
+          BFC_USUARIO: ${{ secrets.BFC_USUARIO }}
+          BFC_CLAVE: ${{ secrets.BFC_CLAVE }}
+          MONTO_A_COMPRAR: ${{ github.event.inputs.monto_compra || secrets.MONTO_A_COMPRAR || '50' }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python bot_fondo_comun_github.py
