@@ -15,7 +15,7 @@ URL_COMPRA = "https://www20.bfc.com.ve/main/divisas/compra"
 USUARIO = os.getenv("BFC_USUARIO")
 CLAVE = os.getenv("BFC_CLAVE")
 # El monto se lee de la entrada del usuario en GitHub o del secret por defecto
-MONTO_A_COMPRAR = os.getenv("MONTO_A_COMPRAR", "50")
+MONTO_A_COMPRAR = os.getenv("MONTO_A_COMPRAR", "100")
 
 # Telegram Config
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
